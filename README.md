@@ -1,13 +1,13 @@
 Shop Product.
 Product -> Cart -> Checkout (ten, sdt, dia chi)
 
-
+```
 Product
 id
 name
 description
 price
-
+```
 
 1. Setup connection vao DB (ConnectionUtils) Blocker
 2. DAO - Model  (Spring -> Repository - Entity) Blocker
@@ -15,7 +15,7 @@ price
 4. Servlet -> Add
 5. Servlet -> Edit
 6. Servlet -> Delete
-
+```
 Order
 id
 cus_name
@@ -30,7 +30,7 @@ name
 description
 price
 quantity
-
+```
 7. Servlet -> AddItemToCart (DB, Session)
 8. Servlet -> ViewCart
 9. Servlet -> DeleteItemFromCart
