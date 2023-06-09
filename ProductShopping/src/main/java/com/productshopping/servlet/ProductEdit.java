@@ -26,7 +26,17 @@ public class ProductEdit extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int id = Integer.parseInt(request.getParameter("id"));
+		String name = request.getParameter("name");
+		String description = request.getParameter("description");
+		Double price = Double.parseDouble(request.getParameter("price"));
 		PrintWriter out = response.getWriter();
 		out.append("<!DOCTYPE html>\r\n"
 				+ "<html>\r\n"
@@ -37,37 +47,30 @@ public class ProductEdit extends HttpServlet {
 				+ "</head>\r\n"
 				+ "<body>\r\n"
 				+ "	<div class=\"container\">\r\n"
-				+ "		<form action=\"\" method=\"post\">\r\n"
+				+ "		<form action=\"ProductServlet\" method=\"post\">\r\n"
 				+ "			  <div class=\"mb-3\">\r\n"
-				+ "			    <label for=\"id\" class=\"form-label\">ID</label>\r\n"
-				+ "      			<input type=\"text\" name=\"id\" id=\"id\" class=\"form-control\" value=" + id + " disabled>\r\n"
+				+ "			    <label class=\"form-label\">ID</label>\r\n"
+				+ "					<input type=\"text\" name=\"id\" class=\"form-control visually-hidden\" value=" + id + ">\r\n"
+				+ "      			<input type=\"text\" class=\"form-control\" value=" + id + " disabled>\r\n"
 				+ "			  </div>\r\n"
 				+ "			  <div class=\"mb-3\">\r\n"
 				+ "			    <label for=\"name\" class=\"form-label\">Name</label>\r\n"
-				+ "      			<input type=\"text\" name=\"name\" id=\"name\" class=\"form-control\">\r\n"
+				+ "      			<input type=\"text\" name=\"name\" id=\"name\" class=\"form-control\" value=\"" + name + "\">\r\n"
 				+ "			  </div>\r\n"
 				+ "			  <div class=\"mb-3\">\r\n"
 				+ "			    <label for=\"description\" class=\"form-label\">Description</label>\r\n"
-				+ "      			<input type=\"text\" name=\"description\" id=\"description\" class=\"form-control\">\r\n"
+				+ "      			<input type=\"text\" name=\"description\" id=\"description\" class=\"form-control\" value=\"" + description + "\">\r\n"
 				+ "			  </div>\r\n"
 				+ "			  <div class=\"mb-3\">\r\n"
 				+ "			    <label for=\"price\" class=\"form-label\">Price</label>\r\n"
-				+ "      			<input type=\"text\" name=\"price\" id=\"price\" class=\"form-control\">\r\n"
+				+ "      			<input type=\"text\" name=\"price\" id=\"price\" class=\"form-control\" value=" + price + ">\r\n"
 				+ "			  </div>\r\n"
-				+ "			  <button type=\"submit\" name=\"add\" class=\"btn btn-primary\">Edit</button>\r\n"
+				+ "			  <button type=\"submit\" name=\"edit\" class=\"btn btn-primary\" value=\"edit\">Edit</button>\r\n"
 				+ "		</form>\r\n"
 				+ "	</div>\r\n"
 				+ "<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js\" integrity=\"sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz\" crossorigin=\"anonymous\"></script>\r\n"
 				+ "</body>\r\n"
 				+ "</html>");
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
 	}
 
 }

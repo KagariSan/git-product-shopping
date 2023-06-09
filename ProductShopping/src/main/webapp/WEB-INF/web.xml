@@ -11,16 +11,6 @@
   </welcome-file-list>
   <servlet>
     <description></description>
-    <display-name>Product</display-name>
-    <servlet-name>Product</servlet-name>
-    <servlet-class>com.productshopping.servlet.Product</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Product</servlet-name>
-    <url-pattern>/Product</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
     <display-name>ProductServlet</display-name>
     <servlet-name>ProductServlet</servlet-name>
     <servlet-class>com.productshopping.servlet.ProductServlet</servlet-class>

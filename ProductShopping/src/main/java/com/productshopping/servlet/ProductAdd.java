@@ -30,6 +30,14 @@ public class ProductAdd extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		PrintWriter out = response.getWriter();
 		out.append("<!DOCTYPE html>\r\n"
 				+ "<html>\r\n"
@@ -40,10 +48,11 @@ public class ProductAdd extends HttpServlet {
 				+ "</head>\r\n"
 				+ "<body>\r\n"
 				+ "	<div class=\"container\">\r\n"
-				+ "		<form action=\"\" method=\"post\">\r\n"
+				+ "		<form action=\"ProductServlet\" method=\"post\">\r\n"
 				+ "			  <div class=\"mb-3\">\r\n"
 				+ "			    <label for=\"id\" class=\"form-label\">ID</label>\r\n"
-				+ "      			<input type=\"text\" name=\"id\" id=\"id\" class=\"form-control\" value=" + (ProductDAO.getProductDAO().getCountProduct() + 1) +" disabled>\r\n"
+				+ "					<input type=\"text\" name=\"id\" class=\"form-control\" value=" + ProductDAO.getProductDAO().getIdAutoIncrement() + " hidden=\"true\">\r\n"
+				+ "      			<input type=\"text\" class=\"form-control\" value=" + ProductDAO.getProductDAO().getIdAutoIncrement() +" disabled>\r\n"
 				+ "			  </div>\r\n"
 				+ "			  <div class=\"mb-3\">\r\n"
 				+ "			    <label for=\"name\" class=\"form-label\">Name</label>\r\n"
@@ -57,26 +66,12 @@ public class ProductAdd extends HttpServlet {
 				+ "			    <label for=\"price\" class=\"form-label\">Price</label>\r\n"
 				+ "      			<input type=\"text\" name=\"price\" id=\"price\" class=\"form-control\">\r\n"
 				+ "			  </div>\r\n"
-				+ "			  <button type=\"submit\" name=\"add\" class=\"btn btn-primary\">+ Add</button>\r\n"
+				+ "			  <button type=\"submit\" name=\"add\" class=\"btn btn-primary\" value=\"add\">+ Add</button>\r\n"
 				+ "		</form>\r\n"
 				+ "	</div>\r\n"
 				+ "<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js\" integrity=\"sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz\" crossorigin=\"anonymous\"></script>\r\n"
 				+ "</body>\r\n"
 				+ "</html>");
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String name = request.getParameter("name");
-		String description = request.getParameter("description");
-		String price = request.getParameter("price");
-		
-		if(Objects.nonNull(name) && Objects.nonNull(description) && Objects.nonNull(price)) {
-			ProductDAO.getProductDAO().addProduct(name, description, Double.parseDouble(price));
-		}
-		response.sendRedirect("ProductServlet");
 	}
 
 }

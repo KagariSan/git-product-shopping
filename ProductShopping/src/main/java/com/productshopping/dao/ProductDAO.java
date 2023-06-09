@@ -35,11 +35,13 @@ public class ProductDAO {
 		}
 	}
 
-	public int getCountProduct() {
+	public int getIdAutoIncrement() {
 		try (
 			Connection conn = ConnectionUtil.getConnection();
-			PreparedStatement ps = conn.prepareStatement("SELECT COUNT(*) FROM product");
+			PreparedStatement ps2 = conn.prepareStatement("SET @@SESSION.information_schema_stats_expiry = 0;");
+			PreparedStatement ps = conn.prepareStatement("SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME='product' AND TABLE_SCHEMA='shopping';");
 		) {
+			int row = ps2.executeUpdate();
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				int count = rs.getInt(1);
@@ -60,7 +62,6 @@ public class ProductDAO {
 			ps.setString(1, name);
 			ps.setString(2, description);
 			ps.setDouble(3, price);
-			
 			int rowAffect = ps.executeUpdate();
 			return rowAffect;
 		} catch (Exception e) {
@@ -72,7 +73,7 @@ public class ProductDAO {
 	public int editProduct(String name, String description, double price, int id) {
 		try(
 			Connection conn = ConnectionUtil.getConnection();
-			PreparedStatement ps = conn.prepareStatement("UPDATE product SET name=? AND description=? AND price=? WHERE id=?");
+			PreparedStatement ps = conn.prepareStatement("UPDATE product SET name=?, description=?, price=? WHERE id=?");
 		) {
 			ps.setString(1, name);
 			ps.setString(2, description);
@@ -85,6 +86,22 @@ public class ProductDAO {
 			e.printStackTrace();
 			return 0;
 		}
+	}
+	
+	public int deleteProduct(int id) {
+		try(
+			Connection conn = ConnectionUtil.getConnection();
+			PreparedStatement ps = conn.prepareStatement("DELETE FROM product WHERE id=?");
+		) {
+			ps.setInt(1, id);
+			
+			int rowAffect = ps.executeUpdate();
+			return rowAffect;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+		
 	}
 
 }

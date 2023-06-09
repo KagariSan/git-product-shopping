@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Objects;
 
 import com.productshopping.dao.ProductDAO;
 import com.productshopping.model.Product;
@@ -61,7 +62,14 @@ public class ProductServlet extends HttpServlet {
 					+ "		 <td>\r\n"	
 					+ "      	<form action=\"ProductEdit?id=" + product.getId() + "\" method=\"post\">\r\n"
 					+ "      		<input type=\"text\" name=\"id\" value=" + product.getId() + " class=\"visually-hidden\"/>\r\n"
-					+ "      		<button type=\"submit\" name=\"edit\" class=\"btn btn-primary\">Edit</button>\r\n"
+					+ "      		<input type=\"text\" name=\"name\" value=" + product.getName() + " class=\"visually-hidden\"/>\r\n"
+					+ "      		<input type=\"text\" name=\"description\" value=" + product.getDescription() + " class=\"visually-hidden\"/>\r\n"
+					+ "      		<input type=\"text\" name=\"price\" value=" + product.getPrice() + " class=\"visually-hidden\"/>\r\n"
+					+ "      		<button type=\"submit\" name=\"edit\" class=\"btn btn-primary\" value=\"edit\">Edit</button>\r\n"
+					+ "      	</form>\r\n"
+					+ "      	<form action=\"\" method=\"post\">\r\n"
+					+ "      		<input type=\"text\" name=\"id\" value=" + product.getId() + " class=\"visually-hidden\"/>\r\n"
+					+ "      		<button type=\"submit\" name=\"delete\" class=\"btn btn-primary mt-2\" value=\"delete\">Delete</button>\r\n"
 					+ "      	</form>\r\n"
 					+ "      </td>"
 					+ "    </tr>");
@@ -69,7 +77,7 @@ public class ProductServlet extends HttpServlet {
 		out.append("</tbody>\r\n"
 				+ "</table>\r\n"
 				+ "<form action=\"ProductAdd\" method=\"post\">\r\n"
-				+ "		<button type=\"submit\" name=\"add\" class=\"btn btn-primary\"> + Add</button>\r\n"
+				+ "		<button type=\"submit\" name=\"add\" class=\"btn btn-primary\" value=\"add\"> + Add</button>\r\n"
 				+ "</form>\r\n"
 				+ "<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js\" integrity=\"sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz\" crossorigin=\"anonymous\"></script>\r\n"
 				+ "</body>\r\n"
@@ -80,7 +88,27 @@ public class ProductServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		String add = request.getParameter("add");
+		String edit = request.getParameter("edit");
+		String delete = request.getParameter("delete");
+		
+		String id = request.getParameter("id");
+		String name = request.getParameter("name");
+		String description = request.getParameter("description");
+		String price = request.getParameter("price");
+		
+		if(Objects.nonNull(add) && add.equals("add") && Objects.nonNull(name) && Objects.nonNull(description) && Objects.nonNull(price)) {
+			ProductDAO.getProductDAO().addProduct(name, description, Double.parseDouble(price));
+		}
+		
+		if(Objects.nonNull(edit) && edit.equals("edit") && Objects.nonNull(name) && Objects.nonNull(description) && Objects.nonNull(price)) {
+			ProductDAO.getProductDAO().editProduct(name, description, Double.parseDouble(price), Integer.parseInt(id));
+		}
+		
+		if(Objects.nonNull(delete) && delete.equals("delete") && Objects.nonNull(id)) {
+			ProductDAO.getProductDAO().deleteProduct(Integer.parseInt(id));
+		}
+	
 		doGet(request, response);
 	}
 
